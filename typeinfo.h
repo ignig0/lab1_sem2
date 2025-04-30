@@ -2,10 +2,6 @@
 
 #include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct TypeInfo TypeInfo;
 typedef void (*binary_operation)(const void*, const void*, void*);
 typedef size_t (*get_size)();   
@@ -24,7 +20,3 @@ struct TypeInfo {
     inputter input;
     const void* zero;
 };
-
-#ifdef __cplusplus
-}
-#endif
