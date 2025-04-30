@@ -1,16 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "integer.h"
 
-#include <stdlib.h>
 
-
+typedef struct Integer {
+    int value;
+} Integer;
 
 void integer_add(const void *a, const void *b, void *result) {
     const Integer *s1 = (const Integer*)a;
     const Integer *s2 = (const Integer*)b;
-    
     Integer *res = (Integer*)result;
-    res->value = s1->value + s2->value;
-    
+    res->value = s1->value + s2->value;  
+}
+
+void integer_swap(void *a, void *b) {
+    int *dbl1 = (int *)a;
+    int *dbl2 = (int *)b;
+    int temp = *dbl1;
+    *dbl1 = *dbl2;
+    *dbl2 = temp;
 }
 
 void integer_multiply(const void *a, const void *b, void *result) {
@@ -26,32 +35,32 @@ void integer_assign(void *dest, const void *src) {
     d->value = s->value;
 }
 
-void *integer_alloc() {
-    return malloc(sizeof(Integer));
+void integer_input(void *data) {
+    Integer *val = data;
+    printf("Enter integer: ");
+    scanf("%d", &val->value);
 }
 
-void integer_dealloc(void* data) {
-    free(data);
+void integer_print(const void *data) {
+    const Integer *val = data;
+    printf("%d ", val->value);
 }
 
-static const int zero = 0;
-static const int one = 1;
+
+static const Integer zero = {0};
 static struct TypeInfo* int_type = NULL;
 
-const TypeInfo *getIntegerTypeInfo() {
-    if (int_type == NULL) {
-        int_type = malloc(sizeof(struct TypeInfo));
-        if (int_type == NULL) return NULL; 
-
-        
+const TypeInfo *get_integer_type_info() {
+    if (!int_type) {
+        int_type = malloc(sizeof(struct TypeInfo)); 
         int_type->element_size = sizeof(Integer);
         int_type->add = integer_add;
         int_type->multiply = integer_multiply;
         int_type->assign = integer_assign;
-        int_type->allocate = integer_alloc;
-        int_type->deallocate = integer_dealloc;
+        int_type->input = integer_input;
+        int_type->print = integer_print;
+        int_type->swap = integer_swap;
         int_type->zero = &zero;
-        int_type->one = &one;
     }
 
     return int_type;

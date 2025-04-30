@@ -2,21 +2,29 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct TypeInfo TypeInfo;
-
-typedef void (*BinaryOperation)(const void*, const void*, void*);
-
-typedef void (*UnaryOperation)(void*, const void*);
-typedef void* (*Allocator)();
-typedef void (*Deallocator)(void*);
+typedef void (*binary_operation)(const void*, const void*, void*);
+typedef size_t (*get_size)();   
+typedef void (*unary_operation)(void*, const void*);
+typedef void (*swapper)(void *element1, void *element2);
+typedef void (*printer)(const void *element);
+typedef void (*inputter)(void *element);
 
 struct TypeInfo {
     size_t element_size;
-    BinaryOperation add;
-    BinaryOperation multiply;
-    UnaryOperation assign;
-    Allocator allocate;
-    Deallocator deallocate;
+    binary_operation add;
+    binary_operation multiply;
+    unary_operation assign;
+    printer print;
+    swapper swap;
+    inputter input;
     const void* zero;
-    const void* one;
 };
+
+#ifdef __cplusplus
+}
+#endif

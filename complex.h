@@ -1,9 +1,6 @@
 #pragma once
+
 #include "typeinfo.h"
 
+const TypeInfo *get_complex_type_info();
 
-typedef struct {
-    double real;
-    double imag;
-} Complex;
-const TypeInfo *getComplexTypeInfo();

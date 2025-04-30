@@ -1,8 +1,6 @@
-
 #pragma once
+
 #include "typeinfo.h"
-typedef struct Integer {
-    int value;
-} Integer;
-const TypeInfo *getIntegerTypeInfo();
+
+const TypeInfo *get_integer_type_info();
 
